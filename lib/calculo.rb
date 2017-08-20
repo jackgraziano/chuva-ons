@@ -6,7 +6,7 @@ def calcula_remocao_vies(nome_bacia, data)
   # retorna mes (JAN, FEV, ...)
   meses = { "01": "JAN", "02": "FEV", "03": "MAR", "04": "ABR",
             "05": "MAI", "06": "JUN", "07": "JUL", "08": "AGO",
-            "09": "SET", "10": "OUT", "11": "NOV", "12": "DEV" }
+            "09": "SET", "10": "OUT", "11": "NOV", "12": "DEZ" }
   mes = meses[data[4..5].to_sym]
 
   # carimba vetor de chuva na bacia
