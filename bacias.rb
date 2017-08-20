@@ -1,13 +1,13 @@
 
 class SubBacia
-  attr_accessor :nome, :coordenadas
+  attr_accessor :nome, :coordenadas, :parametros
   @coordenadas = []
 end
 
 class Bacia
-  attr_accessor :nome, :sub_bacias_eta, :sub_bacias_gefs
-  @sub_bacias_eta = []
-  @sub_bacias_gefs = []
+  attr_accessor :nome, :sub_bacias_ETA, :sub_bacias_GEFS
+  @sub_bacias_ETA = []
+  @sub_bacias_GEFS = []
 end
 
 module Bacias
@@ -57,37 +57,169 @@ module Bacias
                                 {lat:-21.00, lon: -48.60},
                                 {lat:-21.00, lon: -49.00}
                               ]
+  AGUA_VERMELHA.parametros = {
+                                A_JAN: 0.001120,
+                                A_FEV: 0.00105,
+                                A_MAR: 0.00105,
+                                A_ABR: 0.00105,
+                                A_MAI: -0.04105,
+                                A_JUN: -0.04105,
+                                A_JUL: -0.04105,
+                                A_AGO: -0.04105,
+                                A_SET: 0.00172,
+                                A_OUT: 0.00172,
+                                A_NOV: 0.00172,
+                                A_DEZ: 0.00112,
 
-  # grande_GR1 = SubBacia.new
-  # grande_GR1.nome = "GR1 - Grande"
-  # grande_GR1.coordenadas = [ {lat:-21.00, lon: -44.00},
-  #                            {lat:-22.00, lon: -44.00},
-  #                            {lat:-22.00, lon: -45.00},
-  #                            {lat:-23.00, lon: -46.00} ]
+                                B_JAN: 0.58348,
+                                B_FEV: 0.68752,
+                                B_MAR: 0.68752,
+                                B_ABR: 0.68752,
+                                B_MAI: 2.09049,
+                                B_JUN: 2.09049,
+                                B_JUL: 2.09049,
+                                B_AGO: 2.09049,
+                                B_SET: 0.5827,
+                                B_OUT: 0.5827,
+                                B_NOV: 0.5827,
+                                B_DEZ: 0.58348,
 
-  # grande_GR2 = SubBacia.new
-  # grande_GR2.nome = "GR2 - Grande"
-  # grande_GR2.coordenadas = [ {lat:-21.00, lon: -45.00},
-  #                            {lat:-21.00, lon: -46.00},
-  #                            {lat:-22.00, lon: -46.00} ]
+                                limite_JAN: 371.9,
+                                limite_FEV: 297.6,
+                                limite_MAR: 297.6,
+                                limite_ABR: 297.6,
+                                limite_MAI: 26.6,
+                                limite_JUN: 26.6,
+                                limite_JUL: 26.6,
+                                limite_AGO: 26.6,
+                                limite_SET: 242.6,
+                                limite_OUT: 242.6,
+                                limite_NOV: 242.6,
+                                limite_DEZ: 371.9,
 
-  # grande_GR3 = SubBacia.new
-  # grande_GR3.nome = "GR3 - Grande"
-  # grande_GR3.coordenadas = [ {lat:-20.00, lon: -48.00},
-  #                            {lat:-20.00, lon: -49.00},
-  #                            {lat:-21.00, lon: -47.00},
-  #                            {lat:-21.00, lon: -48.00} ]
+                                lim_10_dias_JAN: 143,
+                                lim_10_dias_FEV: 95,
+                                lim_10_dias_MAR: 95,
+                                lim_10_dias_ABR: 95,
+                                lim_10_dias_MAI: 30,
+                                lim_10_dias_JUN: 30,
+                                lim_10_dias_JUL: 30,
+                                lim_10_dias_AGO: 30,
+                                lim_10_dias_SET: 76,
+                                lim_10_dias_OUT: 76,
+                                lim_10_dias_NOV: 76,
+                                lim_10_dias_DEZ: 143,
 
-  # grande_GR4 = SubBacia.new
-  # grande_GR4.nome = "GR4 - Grande"
-  # grande_GR4.coordenadas = [ {lat:-20.00, lon: -50.00},
-  #                            {lat:-21.00, lon: -49.00},
-  #                            {lat:-22.00, lon: -47.00} ]
+                                lim_diario_JAN: 29,
+                                lim_diario_FEV: 29,
+                                lim_diario_MAR: 29,
+                                lim_diario_ABR: 29,
+                                lim_diario_MAI: 29,
+                                lim_diario_JUN: 29,
+                                lim_diario_JUL: 29,
+                                lim_diario_AGO: 29,
+                                lim_diario_SET: 29,
+                                lim_diario_OUT: 29,
+                                lim_diario_NOV: 29,
+                                lim_diario_DEZ: 29,
+  }
+
+  GRANDE_GR1 = SubBacia.new
+  GRANDE_GR1.nome = "GR1 - Grande"
+  GRANDE_GR1.coordenadas = [ {lat:-21.00, lon: -44.00},
+                             {lat:-22.00, lon: -44.00},
+                             {lat:-22.00, lon: -45.00},
+                             {lat:-23.00, lon: -46.00} ]
+
+  GRANDE_GR2 = SubBacia.new
+  GRANDE_GR2.nome = "GR2 - Grande"
+  GRANDE_GR2.coordenadas = [ {lat:-21.00, lon: -45.00},
+                             {lat:-21.00, lon: -46.00},
+                             {lat:-22.00, lon: -46.00} ]
+
+  GRANDE_GR3 = SubBacia.new
+  GRANDE_GR3.nome = "GR3 - Grande"
+  GRANDE_GR3.coordenadas = [ {lat:-20.00, lon: -48.00},
+                             {lat:-20.00, lon: -49.00},
+                             {lat:-21.00, lon: -47.00},
+                             {lat:-21.00, lon: -48.00} ]
+
+  GRANDE_GR4 = SubBacia.new
+  GRANDE_GR4.nome = "GR4 - Grande"
+  GRANDE_GR4.coordenadas = [ {lat:-20.00, lon: -50.00},
+                             {lat:-21.00, lon: -49.00},
+                             {lat:-22.00, lon: -47.00} ]
+  GRANDE_GR4.parametros = {
+                                A_JAN: 0.00213,
+                                A_FEV: 0.00312,
+                                A_MAR: 0.00312,
+                                A_ABR: 0.00312,
+                                A_MAI: -0.04043,
+                                A_JUN: -0.04043,
+                                A_JUL: -0.04043,
+                                A_AGO: -0.04043,
+                                A_SET: -0.00068,
+                                A_OUT: -0.00068,
+                                A_NOV: -0.00068,
+                                A_DEZ: 0.00213,
+
+                                B_JAN: 0.48543,
+                                B_FEV: 0.48100,
+                                B_MAR: 0.48100,
+                                B_ABR: 0.48100,
+                                B_MAI: 1.99200,
+                                B_JUN: 1.99200,
+                                B_JUL: 1.99200,
+                                B_AGO: 1.99200,
+                                B_SET: 0.86686,
+                                B_OUT: 0.86686,
+                                B_NOV: 0.86686,
+                                B_DEZ: 0.48543,
+
+                                limite_JAN: 241.6,
+                                limite_FEV: 166.3,
+                                limite_MAR: 166.3,
+                                limite_ABR: 166.3,
+                                limite_MAI: 24.5,
+                                limite_JUN: 24.5,
+                                limite_JUL: 24.5,
+                                limite_AGO: 24.5,
+                                limite_SET: 1000.0,
+                                limite_OUT: 1000.0,
+                                limite_NOV: 1000.0,
+                                limite_DEZ: 241.6,
+
+                                lim_10_dias_JAN: 140,
+                                lim_10_dias_FEV: 93,
+                                lim_10_dias_MAR: 93,
+                                lim_10_dias_ABR: 93,
+                                lim_10_dias_MAI: 29,
+                                lim_10_dias_JUN: 29,
+                                lim_10_dias_JUL: 29,
+                                lim_10_dias_AGO: 29,
+                                lim_10_dias_SET: 80,
+                                lim_10_dias_OUT: 80,
+                                lim_10_dias_NOV: 80,
+                                lim_10_dias_DEZ: 140,
+
+                                lim_diario_JAN: 27,
+                                lim_diario_FEV: 27,
+                                lim_diario_MAR: 27,
+                                lim_diario_ABR: 27,
+                                lim_diario_MAI: 27,
+                                lim_diario_JUN: 27,
+                                lim_diario_JUL: 27,
+                                lim_diario_AGO: 27,
+                                lim_diario_SET: 27,
+                                lim_diario_OUT: 27,
+                                lim_diario_NOV: 27,
+                                lim_diario_DEZ: 27,
+  }
 
   GRANDE = Bacia.new
   GRANDE.nome = "Bacia do Rio Grande"
-  GRANDE.sub_bacias_eta = [CAMARGOS, FUNIL, PORTO_DOS_BUENOS, PARAGUACU, AGUA_VERMELHA]
-  # grande.sub_bacias_gefs = [grande_GR1, grande_GR2, grande_GR3, grande_GR4]
+  GRANDE.sub_bacias_ETA = [CAMARGOS, FUNIL, PORTO_DOS_BUENOS, PARAGUACU, AGUA_VERMELHA]
+  GRANDE.sub_bacias_GEFS = [GRANDE_GR1, GRANDE_GR2, GRANDE_GR3, GRANDE_GR4]
 end
 
 
