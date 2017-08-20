@@ -4,6 +4,7 @@ require 'zip'
 require 'fileutils'
 require 'pry'
 require_relative 'bacias'
+include Bacias
 
 Zip.on_exists_proc = true
 
@@ -11,15 +12,6 @@ link_eta = "http://www.ons.org.br/images/operacao_integrada/meteorologia/eta/Eta
 link_gefs = "http://www.ons.org.br/images/operacao_integrada/meteorologia/global/GEFS_precipitacao10d.zip"
 file_eta = "/tmp/file_eta.zip"
 file_gefs = "/tmp/file_gefs.zip"
-
-class PrevisaoCoordenada
-  attr_accessor :lat, :long, :chuva_1, :chuva_2, :chuva_3, :chuva_4, :chuva_5,
-                :chuva_6, :chuva_7, :chuva_8, :chuva_9, :chuva_10
-  def initialize(lat, long)
-    @lat = lat
-    @long = long
-  end
-end
 
 def download_file(link, file)
   File.open(file, "wb") do |f|
@@ -36,40 +28,25 @@ def unzip_file(file, destiny)
   end
 end
 
-def load_file
+def load_files(files)
   previsao = []
-  files = [
-        ['20170819_1921/eta/ETA40_p190817a200817.dat', 1],
-        ['20170819_1921/eta/ETA40_p190817a210817.dat', 2],
-        ['20170819_1921/eta/ETA40_p190817a220817.dat', 3],
-        ['20170819_1921/eta/ETA40_p190817a230817.dat', 4],
-        ['20170819_1921/eta/ETA40_p190817a240817.dat', 5],
-        ['20170819_1921/eta/ETA40_p190817a250817.dat', 6],
-        ['20170819_1921/eta/ETA40_p190817a260817.dat', 7],
-        ['20170819_1921/eta/ETA40_p190817a270817.dat', 8],
-        ['20170819_1921/eta/ETA40_p190817a280817.dat', 9],
-        ['20170819_1921/eta/ETA40_p190817a290817.dat', 10]
-  ]
-
+  hash = Hash.new(0)
   files.each do |file, index_chuva|
     puts "Lendo #{file}"
     File.open(file, "r") do |f|
       f.each_line do |line|
-        lat = line[0..5].to_f
-        long = line[7..12].to_f
-        chuva = line[14..18].to_f
-        index = previsao.index { |obj| obj.lat == lat && obj.long == long }
-        if index.nil?
-          ponto = PrevisaoCoordenada.new(lat, long)
-          ponto.send("chuva_#{index_chuva}=".to_sym, chuva)
-          previsao << ponto
-        else
-          previsao[index].send("chuva_#{index_chuva}=".to_sym, chuva)
-        end
+        lat = line[0..5]
+        lon = line[7..12]
+        chuva = line[14..18]
+        key = line[0..5] + line[7..12]
+        hash[key] = Hash.new(0) if hash[key] == 0
+        hash[key][:lat] = lat.to_f
+        hash[key][:lon] = lon.to_f
+        hash[key][index_chuva.to_sym] = chuva.to_f
       end
     end
   end
-  return previsao
+  return hash
 end
 
 # timestamp =  Time.now.strftime("%Y%m%d_%H%M")
@@ -77,4 +54,23 @@ end
 # download_file(link_gefs, file_gefs)
 # unzip_file(file_eta, "#{timestamp}/eta")
 # unzip_file(file_gefs, "#{timestamp}/gefs")
-# previsao = load_file
+hash_ETA = load_files([
+        ['20170819_1921/eta/ETA40_p190817a200817.dat', "D1"],
+        ['20170819_1921/eta/ETA40_p190817a210817.dat', "D2"],
+        ['20170819_1921/eta/ETA40_p190817a220817.dat', "D3"],
+        ['20170819_1921/eta/ETA40_p190817a230817.dat', "D4"],
+        ['20170819_1921/eta/ETA40_p190817a240817.dat', "D5"],
+        ['20170819_1921/eta/ETA40_p190817a250817.dat', "D6"],
+        ['20170819_1921/eta/ETA40_p190817a260817.dat', "D7"],
+        ['20170819_1921/eta/ETA40_p190817a270817.dat', "D8"],
+        ['20170819_1921/eta/ETA40_p190817a280817.dat', "D9"],
+        ['20170819_1921/eta/ETA40_p190817a290817.dat', "D10"]
+  ])
+
+GRANDE.sub_bacias_eta.each do |sub_bacia|
+  sub_bacia.coordenadas.each do |c|
+    key = c[:lat].to_s.rjust(6, " ") + c[:lon].to_s.rjust(6, " ")
+    chuva = hash_ETA[key]
+    c[:chuva] = chuva
+  end
+end
