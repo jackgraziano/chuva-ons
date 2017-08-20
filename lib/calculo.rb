@@ -15,40 +15,11 @@ def calcula_remocao_vies(nome_bacia, data)
       key = sprintf("%.2f",c[:lat]).rjust(6, " ") + sprintf("%.2f",c[:lon]).rjust(6, " ")
       chuva_ETA = hash_ETA[key]
       c[:chuva_ETA] = chuva_ETA
-    end
-  end
-
-  bacia.sub_bacias_GEFS.each do |sub_bacia|
-    sub_bacia.coordenadas.each do |c|
-      key = sprintf("%.2f",c[:lat]).rjust(6, " ") + sprintf("%.2f",c[:lon]).rjust(6, " ")
-      chuva_GEFS = hash_GEFS[key]
-      c[:chuva_GEFS] = chuva_GEFS
-    end
-  end
-
-  # calcula remoção de viés
-
-  # calcula soma dos 10 dias
-  bacia.sub_bacias_ETA.each do |sub_bacia|
-    sub_bacia.coordenadas.each do |c|
       c[:chuva_ETA][:soma_10] = ( c[:chuva_ETA][:D1] + c[:chuva_ETA][:D2] + c[:chuva_ETA][:D3] +
                                   c[:chuva_ETA][:D4] + c[:chuva_ETA][:D5] + c[:chuva_ETA][:D6] +
                                   c[:chuva_ETA][:D7] + c[:chuva_ETA][:D8] + c[:chuva_ETA][:D9] +
                                   c[:chuva_ETA][:D10] ).round(2)
-    end
-  end
 
-  bacia.sub_bacias_GEFS.each do |sub_bacia|
-    sub_bacia.coordenadas.each do |c|
-      c[:chuva_GEFS][:soma_10] = ( c[:chuva_GEFS][:D1] + c[:chuva_GEFS][:D2] + c[:chuva_GEFS][:D3] +
-                                   c[:chuva_GEFS][:D4] + c[:chuva_GEFS][:D5] + c[:chuva_GEFS][:D6] +
-                                   c[:chuva_GEFS][:D7] + c[:chuva_GEFS][:D8] + c[:chuva_GEFS][:D9] +
-                                   c[:chuva_GEFS][:D10] ).round(2)
-    end
-  end
-
-  bacia.sub_bacias_ETA.each do |sub_bacia|
-    sub_bacia.coordenadas.each do |c|
       # aplicar equacao de remocao de vies
       if c[:chuva_ETA][:soma_10] < sub_bacia.parametros["limite_#{mes}".to_sym]
         # aplicar eq de remocao de vies
@@ -66,6 +37,20 @@ def calcula_remocao_vies(nome_bacia, data)
 
       # limite de 10 dias
       c[:Ptotpr_mod10dias_lim] = [ c[:Ptotpr_mod10dias], sub_bacia.parametros["lim_10_dias_#{mes}".to_sym] ].min
+
     end
   end
+
+  bacia.sub_bacias_GEFS.each do |sub_bacia|
+    sub_bacia.coordenadas.each do |c|
+      key = sprintf("%.2f",c[:lat]).rjust(6, " ") + sprintf("%.2f",c[:lon]).rjust(6, " ")
+      chuva_GEFS = hash_GEFS[key]
+      c[:chuva_GEFS] = chuva_GEFS
+      c[:chuva_GEFS][:soma_10] = ( c[:chuva_GEFS][:D1] + c[:chuva_GEFS][:D2] + c[:chuva_GEFS][:D3] +
+                                   c[:chuva_GEFS][:D4] + c[:chuva_GEFS][:D5] + c[:chuva_GEFS][:D6] +
+                                   c[:chuva_GEFS][:D7] + c[:chuva_GEFS][:D8] + c[:chuva_GEFS][:D9] +
+                                   c[:chuva_GEFS][:D10] ).round(2)
+    end
+  end
+
 end
