@@ -1,17 +1,4 @@
-
-class SubBacia
-  attr_accessor :nome, :coordenadas, :parametros
-  @coordenadas = []
-end
-
-class Bacia
-  attr_accessor :nome, :sub_bacias_ETA, :sub_bacias_GEFS
-  @sub_bacias_ETA = []
-  @sub_bacias_GEFS = []
-end
-
-module Bacias
-
+module Grande
   CAMARGOS = SubBacia.new
   CAMARGOS.nome = "CAMARGOS"
   CAMARGOS.coordenadas = [ {lat:-21.40, lon: -44.20},
@@ -19,6 +6,73 @@ module Bacias
                            {lat:-21.80, lon: -44.20},
                            {lat:-21.80, lon: -44.60},
                            {lat:-22.20, lon: -44.60} ]
+  CAMARGOS.parametros = {
+                                  A_JAN: 0.00806,
+                                  A_FEV: 0.00244,
+                                  A_MAR: 0.00244,
+                                  A_ABR: 0.00244,
+                                  A_MAI: 0.00660,
+                                  A_JUN: 0.00660,
+                                  A_JUL: 0.00660,
+                                  A_AGO: 0.00660,
+                                  A_SET: 0.00432,
+                                  A_OUT: 0.00432,
+                                  A_NOV: 0.00432,
+                                  A_DEZ: 0.00806,
+
+                                  B_JAN: 0.01218,
+                                  B_FEV: 0.65662,
+                                  B_MAR: 0.65662,
+                                  B_ABR: 0.65662,
+                                  B_MAI: 0.41491,
+                                  B_JUN: 0.41491,
+                                  B_JUL: 0.41491,
+                                  B_AGO: 0.41491,
+                                  B_SET: 0.40059,
+                                  B_OUT: 0.40059,
+                                  B_NOV: 0.40059,
+                                  B_DEZ: 0.01218,
+
+                                  limite_JAN: 1000.0,
+                                  limite_FEV: 140.7,
+                                  limite_MAR: 140.7,
+                                  limite_ABR: 140.7,
+                                  limite_MAI: 88.7,
+                                  limite_JUN: 88.7,
+                                  limite_JUL: 88.7,
+                                  limite_AGO: 88.7,
+                                  limite_SET: 138.8,
+                                  limite_OUT: 138.8,
+                                  limite_NOV: 138.8,
+                                  limite_DEZ: 1000.0,
+
+                                  lim_10_dias_JAN: 158,
+                                  lim_10_dias_FEV: 91,
+                                  lim_10_dias_MAR: 91,
+                                  lim_10_dias_ABR: 91,
+                                  lim_10_dias_MAI: 23,
+                                  lim_10_dias_JUN: 23,
+                                  lim_10_dias_JUL: 23,
+                                  lim_10_dias_AGO: 23,
+                                  lim_10_dias_SET: 90,
+                                  lim_10_dias_OUT: 90,
+                                  lim_10_dias_NOV: 90,
+                                  lim_10_dias_DEZ: 158,
+
+                                  lim_diario_JAN: 31,
+                                  lim_diario_FEV: 31,
+                                  lim_diario_MAR: 31,
+                                  lim_diario_ABR: 31,
+                                  lim_diario_MAI: 31,
+                                  lim_diario_JUN: 31,
+                                  lim_diario_JUL: 31,
+                                  lim_diario_AGO: 31,
+                                  lim_diario_SET: 31,
+                                  lim_diario_OUT: 31,
+                                  lim_diario_NOV: 31,
+                                  lim_diario_DEZ: 31,
+  }
+
 
   FUNIL = SubBacia.new
   FUNIL.nome = "FUNIL"
@@ -221,5 +275,3 @@ module Bacias
   GRANDE.sub_bacias_ETA = [CAMARGOS, FUNIL, PORTO_DOS_BUENOS, PARAGUACU, AGUA_VERMELHA]
   GRANDE.sub_bacias_GEFS = [GRANDE_GR1, GRANDE_GR2, GRANDE_GR3, GRANDE_GR4]
 end
-
-
