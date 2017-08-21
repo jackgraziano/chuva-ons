@@ -5,7 +5,12 @@ class Bacia
 end
 
 class SubBacia
-  attr_accessor :nome, :coordenadas, :parametros
-  @coordenadas = []
+  attr_accessor :nome,
+                :coordenadas,
+                :parametros,
+                :calculo_ETA
+  def initialize
+    @coordenadas = []
+  end
 end
 

@@ -273,5 +273,5 @@ module Grande
   GRANDE = Bacia.new
   GRANDE.nome = "Bacia do Rio Grande"
   GRANDE.sub_bacias_ETA = [CAMARGOS, AGUA_VERMELHA]
-  GRANDE.sub_bacias_GEFS = [GRANDE_GR4]
+  # GRANDE.sub_bacias_GEFS = [GRANDE_GR4]
 end

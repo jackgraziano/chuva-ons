@@ -20,7 +20,7 @@ link_eta = "http://www.ons.org.br/images/operacao_integrada/meteorologia/eta/Eta
 link_gefs = "http://www.ons.org.br/images/operacao_integrada/meteorologia/global/GEFS_precipitacao10d.zip"
 file_eta = "/tmp/file_eta.zip"    # destino do zip ETA (temporario)
 file_gefs = "/tmp/file_gefs.zip"  # destino do zip GEFS (temporario)
-repo = "/home/jackson/code/repo_previsao_ons/" # destino dos arquivos descompactados
+repo = "/home/jackson/code/repo_previsao_ons" # destino dos arquivos descompactados
 
 # faz download e le arquivos
 timestamp =  Time.now.strftime("%Y%m%d")
