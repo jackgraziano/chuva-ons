@@ -1,7 +1,7 @@
-def calcula_remocao_vies(nome_bacia, data)
+def calcula_remocao_vies(nome_bacia, data, repo)
   bacia = DadosBacias.const_get(nome_bacia)
-  hash_ETA = read_files("#{data}/eta")
-  hash_GEFS = read_files("#{data}/gefs")
+  hash_ETA = read_files("#{repo}/#{data}/eta")
+  hash_GEFS = read_files("#{repo}/#{data}/gefs")
 
   # retorna mes (JAN, FEV, ...)
   meses = { "01": "JAN", "02": "FEV", "03": "MAR", "04": "ABR",
@@ -38,8 +38,7 @@ def calcula_remocao_vies(nome_bacia, data)
       c[:Ptotpr_mod10dias_lim] = [ c[:Ptotpr_mod10dias], sub_bacia.parametros["lim_10_dias_#{mes}".to_sym] ].min
 
       # alfa
-      c[:alfa] = (c[:Ptotpr_mod10dias_lim] / c[:Ptotpr_mod10dias]).round(2)
-
+      c[:alfa] = c[:Ptotpr_mod10dias] == 0 ? 0 : (c[:Ptotpr_mod10dias_lim] / c[:Ptotpr_mod10dias]).round(2)
       c[:chuva_ETA_ajust] = Hash.new(0)
       c[:chuva_ETA_ajust_lim] = Hash.new(0)
       lim_diario = sub_bacia.parametros["lim_diario_#{mes}".to_sym]
