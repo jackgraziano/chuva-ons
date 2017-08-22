@@ -55,7 +55,8 @@ def calcula_remocao_vies(nome_bacia, data, repo)
 
     # 1.2.2. Discretização da precipitação prevista pelo modelo,
     # com remoção de viés e limite, acumulada em dez dias, em precipitação diária
-    sub_bacia.calculo_ETA[:alfa] = ( sub_bacia.calculo_ETA[:ptotprmod_10dias_lim] / sub_bacia.calculo_ETA[:ptotprmod_10dias] ).round(2)
+    alfa = sub_bacia.calculo_ETA[:ptotprmod_10dias] == 0 ? 1 : ( sub_bacia.calculo_ETA[:ptotprmod_10dias_lim] / sub_bacia.calculo_ETA[:ptotprmod_10dias] ).round(2)
+    sub_bacia.calculo_ETA[:alfa] = alfa
     pprlim_10dias = Hash.new(0)
     (1..10).each do |i|
       pprlim_10dias["D#{i}".to_sym] = sub_bacia.calculo_ETA[:alfa] * sub_bacia.calculo_ETA[:pmod]["D#{i}".to_sym]
@@ -73,14 +74,21 @@ def calcula_remocao_vies(nome_bacia, data, repo)
     (1..10).each do |i|
       pprlim_1dia["D#{i}".to_sym] = [sub_bacia.calculo_ETA[:pprlim_10dias]["D#{i}".to_sym] , lim_1dia].min
     end
+    pprlim_1dia[:total] = ( pprlim_1dia[:D1] + pprlim_1dia[:D2] +
+                              pprlim_1dia[:D3] + pprlim_1dia[:D4] +
+                              pprlim_1dia[:D5] + pprlim_1dia[:D6] +
+                              pprlim_1dia[:D7] + pprlim_1dia[:D8] +
+                              pprlim_1dia[:D9] + pprlim_1dia[:D10] ).round(2)
     sub_bacia.calculo_ETA[:pprlim_1dia] = pprlim_1dia
 
     #1.2.4. Obtenção da previsão de precipitação do ponto de grade, com remoção do viés e aplicação de limites
-    beta = Hash.new(0)
-    (1..10).each do |i|
-      beta["D#{i}".to_sym] = sub_bacia.calculo_ETA[:pprlim_1dia]["D#{i}".to_sym] / sub_bacia.calculo_ETA[:pmod]["D#{i}".to_sym]
-    end
+    beta = sub_bacia.calculo_ETA[:pmod][:total] == 0 ? 1 : sub_bacia.calculo_ETA[:pprlim_1dia][:total] / sub_bacia.calculo_ETA[:pmod][:total]
     sub_bacia.calculo_ETA[:beta] = beta
+    sub_bacia.calculo_ETA[:pmod_beta] = Hash.new(0)
+    sub_bacia.calculo_ETA[:pmod].each do |k, v|
+      sub_bacia.calculo_ETA[:pmod_beta][k] = ( v * beta ).round(2)
+    end
+
   end
 
   # bacia.sub_bacias_GEFS.each do |sub_bacia|

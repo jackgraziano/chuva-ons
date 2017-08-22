@@ -1,5 +1,5 @@
 class Bacia
-  attr_accessor :nome, :sub_bacias_ETA, :sub_bacias_GEFS
+  attr_accessor :nome, :sub_bacias_ETA, :sub_bacias_GEFS, :pesos
   @sub_bacias_ETA = []
   @sub_bacias_GEFS = []
 end

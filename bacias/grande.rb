@@ -271,6 +271,11 @@ module Grande
   }
 
   GRANDE = Bacia.new
+  GRANDE.pesos = Hash.new(0)
+  GRANDE.pesos[:ETA] = { D1: 0.462, D2: 0.500, D3: 0.378, D4: 0.402, D5: 0.380,
+                         D6: 0.295, D7: 0.213, D8: 0.217, D9: 0.120, D10: 0.189 }
+  GRANDE.pesos[:GEFS] = { D1: 0.538, D2: 0.500, D3: 0.622, D4: 0.598, D5: 0.620,
+                         D6: 0.705, D7: 0.787, D8: 0.783, D9: 0.880, D10: 0.811 }
   GRANDE.nome = "Bacia do Rio Grande"
   GRANDE.sub_bacias_ETA = [CAMARGOS, AGUA_VERMELHA]
   # GRANDE.sub_bacias_GEFS = [GRANDE_GR4]
